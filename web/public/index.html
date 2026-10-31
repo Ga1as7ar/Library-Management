@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>书阁 · 图书管理系统</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f6f5c'/%3E%3Cpath d='M9 9h5v14H9zM15 9h5v14h-5z' fill='%23fff' opacity='.9'/%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/app.css">
+  <script>
+    // Apply the saved theme before first paint to avoid a flash.
+    document.documentElement.dataset.theme =
+      localStorage.getItem("theme") ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  </script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <!-- Shared SVG paint servers (gradients referenced by charts). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="ring-gradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7fd6b9"/><stop offset="1" stop-color="#1f6f5c"/>
+      </linearGradient>
+      <linearGradient id="spark-fill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4fb89b" stop-opacity=".35"/><stop offset="1" stop-color="#4fb89b" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#/">
+        <span class="brand__mark"><svg class="icon"><use href="icons.svg#i-library"/></svg></span>
+        <span class="brand__text">书阁<small>LIBRARY · 图书管理</small></span>
+      </a>
+      <button class="search-trigger" type="button" id="open-palette">
+        <svg class="icon"><use href="icons.svg#i-search"/></svg><span>快速搜索</span><kbd id="palette-key">⌘K</kbd>
+      </button>
+      <nav class="nav" aria-label="主导航">
+        <span class="nav__indicator" aria-hidden="true"></span>
+        <a class="nav__item" href="#/" data-route="/"><svg class="icon"><use href="icons.svg#i-layout-dashboard"/></svg><span>概览</span></a>
+        <a class="nav__item" href="#/books" data-route="/books"><svg class="icon"><use href="icons.svg#i-books"/></svg><span>图书</span></a>
+        <a class="nav__item" href="#/students" data-route="/students"><svg class="icon"><use href="icons.svg#i-users"/></svg><span>读者</span></a>
+        <a class="nav__item" href="#/loans" data-route="/loans"><svg class="icon"><use href="icons.svg#i-arrows-exchange"/></svg><span>借阅</span><span class="nav__count" id="overdue-count" hidden></span></a>
+      </nav>
+      <div class="sidebar__foot">
+        <button class="theme-toggle" type="button" id="theme-toggle" aria-label="切换主题">
+          <svg class="icon icon--sun"><use href="icons.svg#i-sun"/></svg>
+          <svg class="icon icon--moon"><use href="icons.svg#i-moon"/></svg>
+          <span class="theme-toggle__label">切换主题</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main" id="view" tabindex="-1" aria-live="polite"></main>
+  </div>
+
+  <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+</body>
+</html>
